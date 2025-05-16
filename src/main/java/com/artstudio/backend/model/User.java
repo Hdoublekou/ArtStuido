@@ -23,6 +23,10 @@ public class User {
     private Long id;
 
     private String name;
+    
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
 
     @Column(unique = true)
     private String email;

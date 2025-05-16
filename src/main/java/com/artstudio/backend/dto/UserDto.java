@@ -11,12 +11,17 @@ public class UserDto {
     private String email;
     private String password;
     private String name;
-
+    private String avatarUrl;
+    
     // 构造函数（用于手动赋值）
     public UserDto(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+    
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
     // 从实体类 User 转换而来
@@ -25,5 +30,10 @@ public class UserDto {
         this.name = user.getName();
         this.email = user.getEmail();
         this.password = user.getPassword();
+        this.avatarUrl = user.getAvatarUrl();
+    }
+    
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
