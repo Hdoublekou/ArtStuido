@@ -4,7 +4,7 @@ import com.artstudio.backend.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data // 自动生成 getter、setter、toString、equals、hashCode
+@Data
 @NoArgsConstructor
 public class UserDto {
     private Long id;
@@ -12,28 +12,33 @@ public class UserDto {
     private String password;
     private String name;
     private String avatarUrl;
-    
-    // 构造函数（用于手动赋值）
-    public UserDto(Long id, String name, String email) {
+    private String nickname; // 新增昵称字段
+    private String role;     // 新增角色字段
+    private Boolean deleted; // 可选：标记逻辑删除
+    private String createdAt; // 可选：注册时间（String或LocalDateTime都可）
+
+    // 常规构造函数
+    public UserDto(Long id, String name, String email, String role, String nickname, String avatarUrl, Boolean deleted, String createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
-    }
-    
-    public String getAvatarUrl() {
-        return avatarUrl;
+        this.role = role;
+        this.nickname = nickname;
+        this.avatarUrl = avatarUrl;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
     }
 
-    // 从实体类 User 转换而来
+    // 从实体类 User 转换
     public UserDto(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.avatarUrl = user.getAvatarUrl();
-    }
-    
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+        this.nickname = user.getNickname();
+        this.role = user.getRole();
+        this.deleted = user.isDeleted();
+        this.createdAt = user.getCreatedAt() != null ? user.getCreatedAt().toString() : null;
     }
 }
