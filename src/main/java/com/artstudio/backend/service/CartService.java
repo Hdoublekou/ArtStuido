@@ -8,6 +8,8 @@ import com.artstudio.backend.model.CartItem;
 import com.artstudio.backend.repository.CartItemRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +37,8 @@ public class CartService {
                     cartItemRepository.save(item);
                 });
     }
-
+    
+    @Transactional
     public void removeFromCart(Long userId, Long productId) {
         cartItemRepository.deleteByUserIdAndProductId(userId, productId);
     }

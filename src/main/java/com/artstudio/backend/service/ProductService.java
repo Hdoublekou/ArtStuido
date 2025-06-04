@@ -1,40 +1,24 @@
 package com.artstudio.backend.service;
 
 import com.artstudio.backend.model.Product;
-import com.artstudio.backend.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Optional;
 
-// 商品业务服务
-@Service
-@RequiredArgsConstructor
-public class ProductService {
-    private final ProductRepository productRepository;
+public interface ProductService {
+    List<Product> getRecentProducts();
+    Product save(Product product);
+    List<Product> listActive();
+    Optional<Product> findById(Long id);
+    List<Product> findByShopId(Long shopId);
+    List<Product> search(String keyword);
+    Product update(Long id, Product product);
+    void delete(Long id);
+    Product toggleActive(Long id);
+    Product toggleEvent(Long id);
 
-    // 创建或修改商品
-    public Product save(Product product) {
-        return productRepository.save(product);
-    }
-
-    // 查询所有上架商品
-    public List<Product> listActive() {
-        return productRepository.findByIsActiveTrueOrderByCreatedAtDesc();
-    }
-
-    // 根据ID查询
-    public Optional<Product> findById(Long id) {
-        return productRepository.findById(id);
-    }
-
-    // 店主查看自己所有商品
-    public List<Product> findByShopId(Long shopId) {
-        return productRepository.findByShopId(shopId);
-    }
-
-    // 关键词搜索
-    public List<Product> search(String keyword) {
-        return productRepository.findByNameContainingIgnoreCase(keyword);
-    }
+    // 两个都要有，便于兼容
+    Product saveWithImage(Product product, MultipartFile image);
+    Product saveWithImage(Long shopId, String name, Double price, Integer stock, MultipartFile image);
 }
